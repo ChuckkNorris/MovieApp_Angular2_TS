@@ -1,4 +1,4 @@
-System.register(['angular2/core', './restapi/rest.component', 'angular2/http'], function(exports_1) {
+System.register(['angular2/core', './restapi/rest.component', 'angular2/http', './components/ux-text.component'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', './restapi/rest.component', 'angular2/http'], 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, rest_component_1, http_1;
+    var core_1, rest_component_1, http_1, ux_text_component_1;
     var Constants, MovieComponent;
     return {
         setters:[
@@ -20,6 +20,9 @@ System.register(['angular2/core', './restapi/rest.component', 'angular2/http'], 
             },
             function (http_1_1) {
                 http_1 = http_1_1;
+            },
+            function (ux_text_component_1_1) {
+                ux_text_component_1 = ux_text_component_1_1;
             }],
         execute: function() {
             Constants = (function () {
@@ -62,7 +65,8 @@ System.register(['angular2/core', './restapi/rest.component', 'angular2/http'], 
                     core_1.Component({
                         providers: [http_1.HTTP_PROVIDERS],
                         selector: 'movie-app',
-                        templateUrl: 'app/app.view.html'
+                        templateUrl: 'app/app.view.html',
+                        directives: [ux_text_component_1.UxText]
                     }), 
                     __metadata('design:paramtypes', [http_1.Http])
                 ], MovieComponent);

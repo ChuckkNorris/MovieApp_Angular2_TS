@@ -1,4 +1,6 @@
 <div style="padding: 40px;">
+    <ux-textbox [text]="searchText"></ux-textbox>
+    <ux-textbox [text]="searchText"></ux-textbox>
     <input type="text" [(ngModel)]="searchText"/>
     <button type="button" (click)="Search(searchText);">Search</button>
     <div *ngIf="message">{{message}}</div>

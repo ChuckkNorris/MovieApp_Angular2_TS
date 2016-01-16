@@ -2,6 +2,7 @@
 import {Component} from 'angular2/core';
 import {Rest, RestRequest} from './restapi/rest.component';
 import {HTTP_PROVIDERS, Http} from 'angular2/http';
+import {UxText} from './components/ux-text.component';
 
 interface Search {
     Search: Array<Movie>;
@@ -23,7 +24,8 @@ class Constants {
 @Component({
     providers: [HTTP_PROVIDERS],
     selector: 'movie-app',
-    templateUrl: 'app/app.view.html'
+    templateUrl: 'app/app.view.html',
+    directives: [UxText]
 })
 export class MovieComponent {
     constructor(private _http: Http) {
