@@ -1,14 +1,13 @@
 
 import {Component} from 'angular2/core';
-import { HTTP_PROVIDERS, Http } from 'angular2/http';
-import { Rest } from './restapi/rest.component';
+import {Rest, RestRequest} from './restapi/rest.component';
+import {HTTP_PROVIDERS, Http} from 'angular2/http';
 
 interface Search {
-    Search: Array<MovieInterface>;
-    
+    Search: Array<Movie>;
 }
-interface MovieInterface {
-  
+
+interface Movie {
     imdbID: string;
     Title: string;
     Year: number;
@@ -16,13 +15,9 @@ interface MovieInterface {
     Poster: string;
 }
 
-class MovieClass {
-    constructor(private movieSearchObject: Object) {}
-    id: string = this.movieSearchObject.toString();
-    Title: string;
-    Year: number;
-    type: string;
-    poster: string;
+class Constants {
+    public static SearchParameter: string = 's';
+    public static ResponseFormat: string = 'r';
 }
 
 @Component({
@@ -31,40 +26,35 @@ class MovieClass {
     templateUrl: 'app/app.view.html'
 })
 export class MovieComponent {
-    constructor(private http:Http) {
-            
+    constructor(private _http: Http) {
+         this._omdbApi = new Rest('http://www.omdbapi.com', this._http);
     }
-    private message: string;
-    public MySearch: Search;
-    
-    public SetMessage() {
-        // ?s=Batman&r=JSON
-        var rest = new Rest("http://www.omdbapi.com", this.http);
-        rest.params['s'] = 'honey';
-        rest.params['r'] = 'JSON';
-        rest.getFullUrl();
-        window.console.log(rest.baseUrl);
-        rest.execute().then(bytes => this.getBytes(bytes));
-        this.http.get('http://www.omdbapi.com?s=Batman&r=JSON').subscribe((response) => 
-        this.receive(response));
-        
-    }
-    
-    private getBytes(bytes: string){
-        window.console.log(bytes);
-        var t = bytes;
-    }
-    results: Object[];
-    private receive(movies){
-        var json = movies.json();
-        this.results = json;
-        var result = json;
-        this.MySearch = <Search>json;
-        var title = this.MySearch.Search[0].Title;
-        var test = movies;
-        
-        var what = 3;
-        var cool = "YES";
-    }
+    private _omdbApi: Rest;
+    public Movies: Movie[];
+    public Search(text: string) {
+        var request = new RestRequest();
+        request.params[Constants.SearchParameter] = text;
+        request.params[Constants.ResponseFormat] = 'JSON';
+        request.params['tomatoes'] = 'true';
 
+        this._omdbApi.executeRequest<Search>(request).then(search => {
+            this.Movies = search.Search;
+            window.console.log(this.Movies);     
+            window.console.log(this.Movies[0].Poster);     
+        });
+        this.FindRatings();
+    }
+    
+    public FindRatings() {
+        var request = new RestRequest();
+        request.params['t'] = 'gladiator';
+        request.params[Constants.ResponseFormat] = 'JSON';
+        request.params['tomatoes'] = 'true';
+
+        this._omdbApi.executeRequest<Search>(request).then(search => {
+           
+            window.console.log(this.Movies);     
+           // window.console.log(this.Movies[0].Poster);     
+        });
+    }
 }
