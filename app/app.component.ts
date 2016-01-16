@@ -38,8 +38,11 @@ export class MovieComponent {
     public MySearch: Search;
     
     public SetMessage() {
-        
-        var rest = new Rest("http://www.omdbapi.com?s=Batman&r=JSON", this.http);
+        // ?s=Batman&r=JSON
+        var rest = new Rest("http://www.omdbapi.com", this.http);
+        rest.params['s'] = 'honey';
+        rest.params['r'] = 'JSON';
+        rest.getFullUrl();
         window.console.log(rest.baseUrl);
         rest.execute().then(bytes => this.getBytes(bytes));
         this.http.get('http://www.omdbapi.com?s=Batman&r=JSON').subscribe((response) => 
