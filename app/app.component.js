@@ -30,35 +30,64 @@ System.register(['angular2/core', './restapi/rest.component', 'angular2/http', '
                 }
                 Constants.SearchParameter = 's';
                 Constants.ResponseFormat = 'r';
+                Constants.Title = 't';
+                Constants.ImdbId = 'i';
                 return Constants;
             })();
             MovieComponent = (function () {
                 function MovieComponent(_http) {
                     this._http = _http;
+                    this.fullMovies = [];
                     this._omdbApi = new rest_component_1.Rest('http://www.omdbapi.com', this._http);
                 }
                 MovieComponent.prototype.Search = function (text) {
                     var _this = this;
+                    // this.GetMoviesDirect();
                     var request = new rest_component_1.RestRequest();
                     request.params[Constants.SearchParameter] = text;
                     request.params[Constants.ResponseFormat] = 'JSON';
                     request.params['tomatoes'] = 'true';
                     this._omdbApi.executeRequest(request).then(function (search) {
                         _this.Movies = search.Search;
-                        window.console.log(_this.Movies);
-                        window.console.log(_this.Movies[0].Poster);
+                        //  search.Search.forEach(movie => this.FindRatings(movie.imdbID));
+                        // this.Movies.forEach(movie => this.FindRatings(movie.imdbID));
                     });
-                    this.FindRatings();
+                    this.FindMovie(text);
                 };
-                MovieComponent.prototype.FindRatings = function () {
-                    var _this = this;
+                MovieComponent.prototype.FindMovie = function (title) {
                     var request = new rest_component_1.RestRequest();
-                    request.params['t'] = 'gladiator';
+                    request.params[Constants.Title] = title;
                     request.params[Constants.ResponseFormat] = 'JSON';
                     request.params['tomatoes'] = 'true';
-                    this._omdbApi.executeRequest(request).then(function (search) {
-                        window.console.log(_this.Movies);
-                        // window.console.log(this.Movies[0].Poster);     
+                    this._omdbApi.executeRequest(request).then(function (movie) {
+                        //   this.fullMovies.push(movie);
+                        console.log(movie.imdbRating);
+                        window.console.log('TITLE:' + movie);
+                    });
+                };
+                MovieComponent.prototype.FindRatings = function (imdbId) {
+                    var _this = this;
+                    var request = new rest_component_1.RestRequest();
+                    request.params[Constants.ImdbId] = imdbId;
+                    request.params[Constants.ResponseFormat] = 'JSON';
+                    request.params['tomatoes'] = 'true';
+                    this._omdbApi.executeRequest(request).then(function (movie) {
+                        _this.fullMovies.push(movie);
+                        console.log(movie.imdbRating);
+                        window.console.log(movie);
+                    });
+                };
+                MovieComponent.prototype.GetMoviesDirect = function () {
+                    var _this = this;
+                    var rest = new rest_component_1.Rest("http://www.imdb.com/search/title?genres=action&sort=user_rating,desc&title_type=tv_series,mini_series&num_votes=5000,&pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=2295992002&pf_rd_r=0WP67NH8E64YZKGQNT47&pf_rd_s=right-6&pf_rd_t=15506&pf_rd_i=toptv&ref_=chttvtp_gnr_1", this._http);
+                    var request = new rest_component_1.RestRequest();
+                    // request.params[Constants.ImdbId] = imdbId;
+                    // request.params[Constants.ResponseFormat] = 'JSON';
+                    // request.params['tomatoes'] = 'true';
+                    rest.executeRequest(request).then(function (movie) {
+                        _this.fullMovies.push(movie);
+                        console.log(movie.imdbRating);
+                        window.console.log(movie);
                     });
                 };
                 MovieComponent = __decorate([

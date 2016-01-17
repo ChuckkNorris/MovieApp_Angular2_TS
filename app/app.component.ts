@@ -14,11 +14,54 @@ interface Movie {
     Year: number;
     Type: string;
     Poster: string;
+    tomatoRating: number;
+    tomatoUserMeter: number;
+    imdbRating: number;
+}
+
+interface FullMovie {
+    Actors: string;
+    Awards:  string;
+    BoxOffice:  string;
+    Country:  string;
+    DVD:  string;
+    Director:  string;
+    Genre:  string;
+    Language:  string;
+    Metascore:  string;
+    Plot:  string;
+    Poster:  string;
+    Production:  string;
+    Rated:  string;
+    Released:  string;
+    Response:  string;
+    Runtime:  string;
+    Title:  string;
+    Type:  string;
+    Website:  string;
+    Writer:  string;
+    Year:  string;
+    imdbID:  string;
+    imdbRating:  string;
+    imdbVotes:  string;
+    tomatoConsensus:  string;
+    tomatoFresh:  string;
+    tomatoImage:  string;
+    tomatoMeter: string;
+    tomatoRating:  string;
+    tomatoReviews:  string;
+    tomatoRotten:  string;
+    tomatoURL:  string;
+    tomatoUserMeter: string;
+    tomatoUserRating:  string;
+    tomatoUserReviews:  string;
 }
 
 class Constants {
     public static SearchParameter: string = 's';
     public static ResponseFormat: string = 'r';
+    public static Title: string = 't';
+    public static ImdbId: string = 'i';
 }
 
 @Component({
@@ -33,7 +76,9 @@ export class MovieComponent {
     }
     private _omdbApi: Rest;
     public Movies: Movie[];
+    public fullMovies: FullMovie[] = [];
     public Search(text: string) {
+       // this.GetMoviesDirect();
         var request = new RestRequest();
         request.params[Constants.SearchParameter] = text;
         request.params[Constants.ResponseFormat] = 'JSON';
@@ -41,22 +86,45 @@ export class MovieComponent {
 
         this._omdbApi.executeRequest<Search>(request).then(search => {
             this.Movies = search.Search;
-            window.console.log(this.Movies);     
-            window.console.log(this.Movies[0].Poster);     
+          //  search.Search.forEach(movie => this.FindRatings(movie.imdbID));
+          // this.Movies.forEach(movie => this.FindRatings(movie.imdbID));
         });
-        this.FindRatings();
+        this.FindMovie(text);
     }
-    
-    public FindRatings() {
+    public FindMovie(title: string) {
         var request = new RestRequest();
-        request.params['t'] = 'gladiator';
+        request.params[Constants.Title] = title;
         request.params[Constants.ResponseFormat] = 'JSON';
         request.params['tomatoes'] = 'true';
-
-        this._omdbApi.executeRequest<Search>(request).then(search => {
-           
-            window.console.log(this.Movies);     
-           // window.console.log(this.Movies[0].Poster);     
+        this._omdbApi.executeRequest<FullMovie>(request).then(movie => {
+         //   this.fullMovies.push(movie);
+            console.log(movie.imdbRating);
+            window.console.log('TITLE:' + movie);
+        });
+    }
+    
+    public FindRatings(imdbId: string) {
+        var request = new RestRequest();
+        request.params[Constants.ImdbId] = imdbId;
+        request.params[Constants.ResponseFormat] = 'JSON';
+        request.params['tomatoes'] = 'true';
+        this._omdbApi.executeRequest<FullMovie>(request).then(movie => {
+            this.fullMovies.push(movie);
+            console.log(movie.imdbRating);
+            window.console.log(movie);
+        });
+    }
+    
+    public GetMoviesDirect() {
+        var rest = new Rest("http://www.imdb.com/search/title?genres=action&sort=user_rating,desc&title_type=tv_series,mini_series&num_votes=5000,&pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=2295992002&pf_rd_r=0WP67NH8E64YZKGQNT47&pf_rd_s=right-6&pf_rd_t=15506&pf_rd_i=toptv&ref_=chttvtp_gnr_1", this._http);
+        var request = new RestRequest();
+        // request.params[Constants.ImdbId] = imdbId;
+        // request.params[Constants.ResponseFormat] = 'JSON';
+        // request.params['tomatoes'] = 'true';
+        rest.executeRequest<FullMovie>(request).then(movie => {
+            this.fullMovies.push(movie);
+            console.log(movie.imdbRating);
+            window.console.log(movie);
         });
     }
 }

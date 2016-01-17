@@ -10,6 +10,7 @@ export class Rest {
         var getStatement = this.http.get(this.getFullUrl(request.params));
         var prom = new Promise<T>(resolve => 
             getStatement.subscribe((movies => {
+                window.console.log(movies.json());
                 resolve(<T>movies.json());
             })));
         return prom;

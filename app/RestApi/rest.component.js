@@ -12,6 +12,7 @@ System.register([], function(exports_1) {
                     var getStatement = this.http.get(this.getFullUrl(request.params));
                     var prom = new Promise(function (resolve) {
                         return getStatement.subscribe((function (movies) {
+                            window.console.log(movies.json());
                             resolve(movies.json());
                         }));
                     });

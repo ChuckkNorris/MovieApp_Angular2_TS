@@ -5,8 +5,8 @@
     <button type="button" (click)="Search(searchText);">Search</button>
     <div *ngIf="message">{{message}}</div>
     <ul>
-        <li *ngFor="#movie of Movies">
-            {{movie.Title}}
+        <li *ngFor="#movie of fullMovies">
+            {{movie.Title}} -- {{movie.imdbRating}}
             <img [src]="movie.Poster"/>
         </li>
     </ul>
