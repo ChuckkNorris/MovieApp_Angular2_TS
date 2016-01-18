@@ -1,0 +1,8 @@
+<div style="padding: 40px;">
+
+    <input type="text" [(ngModel)]="searchText" (keyup.enter)="Search(searchText);"/>
+    <button type="button" (click)="Search(searchText);">Search</button>
+    <div *ngIf="message">{{message}}</div>
+
+    <movie-list [movies]="fullMovies"></movie-list>
+</div>

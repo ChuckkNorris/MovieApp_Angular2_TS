@@ -22,7 +22,7 @@ System.register(['angular2/core'], function(exports_1) {
                 UxText = __decorate([
                     core_1.Component({
                         selector: 'ux-textbox',
-                        templateUrl: 'app/components/ux-text.view.html',
+                        templateUrl: 'app/src/controls/ux-text/ux-text.view.html',
                         inputs: ['text']
                     }), 
                     __metadata('design:paramtypes', [])

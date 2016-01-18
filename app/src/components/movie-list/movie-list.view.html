@@ -1,0 +1,13 @@
+<div>
+    <ul *ngIf="movies">
+        <li *ngFor="#movie of movies">
+             {{movie.Title}} <br>
+             IMDB: {{movie.imdbRating}}<br>
+             Tomato: {{movie.tomatoRating}}<br>
+             MataCritic: {{movie.Metascore}} <br>
+            <img *ngIf="movie.Poster" [src]="movie.Poster"/>
+        </li>
+    </ul>
+</div>
+    
+    

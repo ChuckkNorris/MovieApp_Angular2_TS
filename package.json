@@ -6,7 +6,7 @@
         "tsc:w": "tsc -w",
         "lite":"lite-server",
         "live":"live-server",
-        "start": "concurrent \"npm run tsc:w\" \"npm run lite\" "
+        "start": "concurrent \"npm run tsc:w\" \"npm run live\" "
     },
     "license": "ISC",
     "dependencies": {
