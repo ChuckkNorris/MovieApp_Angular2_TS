@@ -36,6 +36,20 @@ export interface FullMovie {
     tomatoUserReviews?:  string;
 }
 
+export interface imdbMovie {
+    num_votes?: number;
+    tconst?: string;
+    type?: string;
+    title?: string;
+    can_rate?: string;
+    rating?: number;
+    year: string;
+}
+export interface actor {
+    nconst?: string;
+    name?: string;
+}
+
 export interface Search {
     Search: Array<Movie>;
 }
