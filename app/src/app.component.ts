@@ -17,11 +17,17 @@ import {MovieList} from './components/movie-list/movie-list.component';
 export class MovieComponent {
     constructor(private _movieApi : MovieApi){}
     public fullMovies: FullMovie[] = [];
-    public Search(text: string){
+    
+    public search(text: string){
+         this.fullMovies = [];
         this._movieApi.GetMovieByTitle(text).then(movie => {
             this.fullMovies.push(movie)
         });
-        this.topMovies.forEach(movie => {
+       
+    }
+    public getTopMovies(){
+        this.fullMovies = [];
+         this.topMovies.forEach(movie => {
             this._movieApi.GetMovieByTitle(movie.title).then(movie => {
                 window.console.log(movie.Title);
                 this.fullMovies.push(movie)

@@ -1,8 +1,28 @@
-<div style="padding: 40px;">
+<nav id="menu">
+     <ul>
+      <li class="rocket" (click)="getTopMovies()"><a >Top Movies</a></li>
+      <li class="wine"><a href="">Item menu 2</a></li>
+      <li class="burger"><a href="">Item menu 3</a></li>
+      <li class="comment"><a href="">Item menu 4</a></li>
+      <li class="sport" ><a href="">Item menu 5</a></li>
+      <li class="earth"><a href="">Item menu 6</a></li>
+  <div class="current">
+    <div class="top-arrow"></div>   
+    <div class="current-back"></div>
+    <div class="bottom-arrow"></div>
+  </div>
+    </ul>
+</nav>
 
-    <input type="text" [(ngModel)]="searchText" (keyup.enter)="Search(searchText);"/>
-    <button type="button" (click)="Search(searchText);">Search</button>
-    <div *ngIf="message">{{message}}</div>
+<div>
+    <div class="dark">
+    <form>
+        <span><input type="text" class="search rounded" placeholder="Search..." [(ngModel)]="searchText" (keyup.enter)="search(searchText);">
+        </span>
+    </form>
+    </div>
+    
+
 
     <movie-list [movies]="fullMovies"></movie-list>
 </div>

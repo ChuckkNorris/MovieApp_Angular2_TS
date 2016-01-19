@@ -1,5 +1,9 @@
 li {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: darkseagreen;
-    
+    float: left;
+    width: 200;
+    height: 300;
+}
+img {
+    width: 200;
+    height: 300;
 }
